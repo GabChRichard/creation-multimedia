@@ -302,7 +302,7 @@ function splitSlides(md) {
 
   return hSections.map(section => {
     // vertical: h2 headings
-    const vSlides = section.split(/\n(?=## )/m)
+    const vSlides = section.split(/\n(?=#{2,5} )/m)
       .map(s => s.trim())
       .filter(Boolean);
     return vSlides.length ? vSlides : [section];
