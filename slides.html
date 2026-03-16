@@ -32,6 +32,8 @@
       text-align: left;
       font-family: 'Segoe UI', system-ui, sans-serif;
       color: var(--text);
+      overflow-y: auto !important;
+      max-height: 100%;
     }
 
     .reveal h1, .reveal h2 {
@@ -264,12 +266,7 @@ const DECKS = [
   { label: 'TP 3',        file: 'tp3.md'   },
 ];
 
-/* ═══════════════════════════════════════════════════════════════
-   SLIDE SPLITTING RULES
-   Horizontal separator : a lone `# Heading` OR an explicit `---`
-   Vertical separator   : `## Subheading`
-   Speaker notes        : lines starting with `Note:` or `notes:`
-   ═══════════════════════════════════════════════════════════════ */
+
 
 const CDN = `https://cdn.jsdelivr.net/gh/${REPO_USER}/${REPO_NAME}@${REPO_BRANCH}`;
 
@@ -294,14 +291,11 @@ function rewriteImagePaths(md, file) {
 
 /* ── Split markdown into a 2-D array [horizontal][vertical] ─ */
 function splitSlides(md) {
-  // horizontal: h1 headings or explicit ---
-  const horizRe = /^(?:---\s*$|# .+)/m;
   const hSections = md.split(/\n(?=---\s*$|\n?# )/m)
     .map(s => s.replace(/^---\s*\n?/, '').trim())
     .filter(Boolean);
 
   return hSections.map(section => {
-    // vertical: h2 headings
     const vSlides = section.split(/\n(?=#{2,5} )/m)
       .map(s => s.trim())
       .filter(Boolean);
@@ -336,7 +330,7 @@ async function loadDeck(file) {
     let md = await fetchMD(file);
     md = rewriteImagePaths(md, file);
 
-    const slides2d  = splitSlides(md);
+    const slides2d     = splitSlides(md);
     const sectionsHTML = buildSections(slides2d);
 
     document.getElementById('slides-container').innerHTML = sectionsHTML;
@@ -356,8 +350,9 @@ async function loadDeck(file) {
         transitionSpeed:'default',
         backgroundTransition: 'fade',
         margin:         0.08,
-        minScale:       0.4,
-        maxScale:       2.0,
+        minScale:       1.0,
+        maxScale:       1.0,
+        disableLayout:  false,
         plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ],
       });
       await revealInstance.initialize();
