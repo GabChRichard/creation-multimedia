@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Présentation — Création Multimédia</title>
+
+  <!-- Reveal.js core -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" id="theme" />
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css" />
+
+  <style>
+    /* ── Brand palette ─────────────────────────────────────── */
+    :root {
+      --accent:   #7c6ff7;
+      --accent2:  #b5afff;
+      --bg:       #0f0f14;
+      --surface:  #1b1b26;
+      --border:   #2e2e44;
+      --text:     #e8e6f0;
+      --muted:    #9896b0;
+      --danger:   #f26f6f;
+    }
+
+    /* ── Reveal overrides ──────────────────────────────────── */
+    .reveal-viewport { background: var(--bg); }
+
+    .reveal .slides section {
+      text-align: left;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: var(--text);
+    }
+
+    .reveal h1, .reveal h2 {
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -.02em;
+      text-transform: none;
+      line-height: 1.15;
+    }
+    .reveal h1 { font-size: 2.2em; border-bottom: 3px solid var(--accent); padding-bottom: .25em; }
+    .reveal h2 { font-size: 1.55em; color: var(--accent2); margin-bottom: .6em; }
+    .reveal h3 { font-size: 1.15em; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
+
+    .reveal p, .reveal li { font-size: .92em; line-height: 1.7; color: var(--text); }
+    .reveal ul, .reveal ol { margin-left: 1.2em; }
+    .reveal li { margin-bottom: .35em; }
+
+    .reveal a { color: var(--accent2); }
+    .reveal a:hover { color: #fff; }
+
+    .reveal blockquote {
+      border-left: 4px solid var(--accent);
+      background: var(--surface);
+      padding: .6em 1em;
+      border-radius: 0 6px 6px 0;
+      font-style: normal;
+      color: var(--muted);
+      width: auto;
+      box-shadow: none;
+    }
+
+    .reveal code {
+      background: var(--surface);
+      color: var(--accent2);
+      padding: .1em .35em;
+      border-radius: 4px;
+      font-size: .85em;
+      border: 1px solid var(--border);
+    }
+
+    .reveal pre {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: none;
+      width: 100%;
+    }
+    .reveal pre code {
+      background: transparent;
+      border: none;
+      padding: 1em;
+      max-height: 380px;
+      font-size: .78em;
+    }
+
+    .reveal img {
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      max-height: 55vh;
+    }
+
+    .reveal table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: .85em;
+    }
+    .reveal table th {
+      background: var(--surface);
+      color: var(--accent2);
+      padding: .5em .8em;
+      border: 1px solid var(--border);
+    }
+    .reveal table td {
+      padding: .45em .8em;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .reveal table tr:nth-child(even) td { background: rgba(255,255,255,.03); }
+
+    /* title slide auto-detect: first slide in a deck */
+    .reveal .slides section.title-slide {
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 80vh;
+    }
+    .reveal .slides section.title-slide h1 {
+      font-size: 2.8em;
+      border-color: var(--accent);
+    }
+
+    /* progress bar color */
+    .reveal .progress span { background: var(--accent); }
+
+    /* ── Top bar ───────────────────────────────────────────── */
+    #topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 40px;
+      background: rgba(15,15,20,.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 9999;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    #topbar-left { display: flex; align-items: center; gap: 10px; }
+
+    #deck-select {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    #deck-select:focus { outline: 2px solid var(--accent); }
+
+    #topbar-right { display: flex; align-items: center; gap: 8px; }
+
+    .tb-btn {
+      background: var(--surface);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: color .15s, border-color .15s;
+      text-decoration: none;
+    }
+    .tb-btn:hover { color: var(--text); border-color: var(--accent); }
+    .tb-btn.active { color: var(--accent2); border-color: var(--accent); }
+
+    #slide-counter { font-size: 12px; color: var(--muted); min-width: 60px; text-align: right; }
+
+    /* ── Loading / error screens ───────────────────────────── */
+    #loading, #error-screen {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: var(--bg);
+      color: var(--muted);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      z-index: 99999;
+      gap: 12px;
+    }
+    #error-screen { display: none; }
+    #error-screen h2 { color: var(--danger); font-size: 1.1em; margin: 0; }
+    #error-screen pre { background: var(--surface); padding: 12px; border-radius: 8px; font-size: 12px; color: var(--muted); max-width: 540px; white-space: pre-wrap; }
+
+    .spinner {
+      width: 32px; height: 32px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* push slides below topbar */
+    .reveal { padding-top: 40px; }
+  </style>
+</head>
+<body>
+
+<!-- ── Loading screen ───────────────────────────────────────── -->
+<div id="loading">
+  <div class="spinner"></div>
+  <span>Chargement des diapositives…</span>
+</div>
+
+<!-- ── Error screen ─────────────────────────────────────────── -->
+<div id="error-screen">
+  <h2>⚠ Impossible de charger le contenu</h2>
+  <pre id="error-msg"></pre>
+  <p style="font-size:13px">Vérifiez que les fichiers Markdown sont accessibles via jsDelivr / rawgit.</p>
+</div>
+
+<!-- ── Top bar ──────────────────────────────────────────────── -->
+<div id="topbar">
+  <div id="topbar-left">
+    <span style="font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.03em">📽 Cours</span>
+    <select id="deck-select" onchange="loadDeck(this.value)">
+      <!-- populated by JS -->
+    </select>
+  </div>
+  <div id="topbar-right">
+    <a class="tb-btn" href="index.html" title="Vue étudiants">← Vue étudiants</a>
+    <button class="tb-btn" id="btn-notes"   onclick="toggleNotes()"   title="Notes enseignant (S)">Notes</button>
+    <button class="tb-btn" id="btn-overview" onclick="toggleOverview()" title="Vue d'ensemble (O)">Vue d'ensemble</button>
+    <button class="tb-btn" id="btn-fs"       onclick="toggleFS()"       title="Plein écran (F)">Plein écran</button>
+    <span id="slide-counter">— / —</span>
+  </div>
+</div>
+
+<!-- ── Reveal container ─────────────────────────────────────── -->
+<div class="reveal">
+  <div class="slides" id="slides-container">
+    <!-- slides injected here -->
+  </div>
+</div>
+
+<!-- Reveal.js + plugins -->
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/zoom/zoom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   CONFIGURATION — edit this section to add / rename your decks
+   ═══════════════════════════════════════════════════════════════ */
+const REPO_USER   = 'GabChRichard';
+const REPO_NAME   = 'creation-multimedia';
+const REPO_BRANCH = 'main';
+
+// Each entry: { label: "Display name", file: "filename.md" }
+const DECKS = [
+  { label: 'Accueil',     file: 'index.md' },
+  { label: 'Chapitre 8',  file: 'c8.md'    },
+  { label: 'TP 3',        file: 'tp3.md'   },
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE SPLITTING RULES
+   Horizontal separator : a lone `# Heading` OR an explicit `---`
+   Vertical separator   : `## Subheading`
+   Speaker notes        : lines starting with `Note:` or `notes:`
+   ═══════════════════════════════════════════════════════════════ */
+
+const CDN = `https://cdn.jsdelivr.net/gh/${REPO_USER}/${REPO_NAME}@${REPO_BRANCH}`;
+
+let revealInstance = null;
+
+/* ── Fetch raw markdown from jsDelivr CDN ─────────────────── */
+async function fetchMD(file) {
+  const url = `${CDN}/${file}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status} — ${url}`);
+  return res.text();
+}
+
+/* ── Rewrite relative image paths to CDN absolute paths ──── */
+function rewriteImagePaths(md, file) {
+  const base = file.includes('/') ? file.split('/').slice(0,-1).join('/') + '/' : '';
+  return md.replace(/!\[([^\]]*)\]\((?!https?:\/\/)([^)]+)\)/g, (_, alt, src) => {
+    const abs = src.startsWith('/') ? `${CDN}${src}` : `${CDN}/${base}${src}`;
+    return `![${alt}](${abs})`;
+  });
+}
+
+/* ── Split markdown into a 2-D array [horizontal][vertical] ─ */
+function splitSlides(md) {
+  // horizontal: h1 headings or explicit ---
+  const horizRe = /^(?:---\s*$|# .+)/m;
+  const hSections = md.split(/\n(?=---\s*$|\n?# )/m)
+    .map(s => s.replace(/^---\s*\n?/, '').trim())
+    .filter(Boolean);
+
+  return hSections.map(section => {
+    // vertical: h2 headings
+    const vSlides = section.split(/\n(?=## )/m)
+      .map(s => s.trim())
+      .filter(Boolean);
+    return vSlides.length ? vSlides : [section];
+  });
+}
+
+/* ── Convert one markdown block → <section> HTML ─────────── */
+function mdToSection(md, isFirst) {
+  const html = marked.parse(md);
+  const cls  = isFirst ? ' class="title-slide"' : '';
+  return `<section${cls}>${html}</section>`;
+}
+
+/* ── Build Reveal <section> tree from 2-D array ──────────── */
+function buildSections(slides2d) {
+  return slides2d.map((hSlide, hi) => {
+    if (hSlide.length === 1) {
+      return mdToSection(hSlide[0], hi === 0);
+    }
+    const inner = hSlide.map((v, vi) => mdToSection(v, hi === 0 && vi === 0)).join('\n');
+    return `<section>\n${inner}\n</section>`;
+  }).join('\n');
+}
+
+/* ── Main loader ──────────────────────────────────────────── */
+async function loadDeck(file) {
+  document.getElementById('loading').style.display = 'flex';
+  document.getElementById('error-screen').style.display = 'none';
+
+  try {
+    let md = await fetchMD(file);
+    md = rewriteImagePaths(md, file);
+
+    const slides2d  = splitSlides(md);
+    const sectionsHTML = buildSections(slides2d);
+
+    document.getElementById('slides-container').innerHTML = sectionsHTML;
+
+    if (revealInstance) {
+      // Reveal v5: sync after DOM update
+      await revealInstance.sync();
+      revealInstance.slide(0, 0, 0);
+    } else {
+      revealInstance = new Reveal({
+        hash:           true,
+        slideNumber:    false,   // we handle counter ourselves
+        controls:       true,
+        progress:       true,
+        center:         false,
+        transition:     'slide',
+        transitionSpeed:'default',
+        backgroundTransition: 'fade',
+        margin:         0.08,
+        minScale:       0.4,
+        maxScale:       2.0,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom ],
+      });
+      await revealInstance.initialize();
+
+      revealInstance.on('slidechanged', updateCounter);
+      revealInstance.on('ready',        updateCounter);
+    }
+
+    document.getElementById('loading').style.display = 'none';
+    updateCounter();
+
+  } catch(err) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('error-screen').style.display = 'flex';
+    document.getElementById('error-msg').textContent =
+      `Fichier : ${file}\n\n${err.message}\n\nAssurez-vous que le dépôt est public et que jsDelivr a indexé la dernière version.`;
+    console.error(err);
+  }
+}
+
+/* ── Slide counter ────────────────────────────────────────── */
+function updateCounter() {
+  if (!revealInstance) return;
+  const { h, v } = revealInstance.getIndices();
+  const total     = revealInstance.getTotalSlides();
+  const current   = revealInstance.getSlidePastCount() + 1;
+  document.getElementById('slide-counter').textContent = `${current} / ${total}`;
+}
+
+/* ── Top bar button actions ───────────────────────────────── */
+function toggleNotes() {
+  // Opens the built-in speaker notes window (same as pressing S)
+  const btn = document.getElementById('btn-notes');
+  if (revealInstance) {
+    revealInstance.getPlugin('notes').open();
+    btn.classList.toggle('active');
+  }
+}
+function toggleOverview() {
+  if (revealInstance) {
+    revealInstance.toggleOverview();
+    document.getElementById('btn-overview').classList.toggle('active');
+  }
+}
+function toggleFS() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+    document.getElementById('btn-fs').classList.add('active');
+  } else {
+    document.exitFullscreen();
+    document.getElementById('btn-fs').classList.remove('active');
+  }
+}
+
+/* ── Populate deck selector ───────────────────────────────── */
+(function initSelect() {
+  const sel = document.getElementById('deck-select');
+  DECKS.forEach(d => {
+    const opt   = document.createElement('option');
+    opt.value   = d.file;
+    opt.textContent = d.label;
+    sel.appendChild(opt);
+  });
+})();
+
+/* ── Boot: load first deck automatically ──────────────────── */
+window.addEventListener('DOMContentLoaded', () => {
+  // honour ?deck=c8.md URL param so the teacher can deep-link
+  const params = new URLSearchParams(location.search);
+  const file   = params.get('deck') || DECKS[0].file;
+  const sel    = document.getElementById('deck-select');
+  if ([...sel.options].some(o => o.value === file)) sel.value = file;
+  loadDeck(file);
+});
+</script>
+</body>
+</html>
