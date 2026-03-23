@@ -6,4 +6,6 @@
 
 ### [Cours 8 : Introduction à la vidéo](./c8.md)
 
+### [Cours 9 : Notions vidéos avancées](./c9.md)
+
 ### [TP3 : Montage vidéo simple](./tp3.md)
