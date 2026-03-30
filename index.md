@@ -8,4 +8,6 @@
 
 ### [Cours 9 : Notions vidéos avancées](./c9.md)
 
+### [Cours 10 : Typographies et animations](./c10.md)
+
 ### [TP3 : Montage vidéo simple](./tp3.md)
