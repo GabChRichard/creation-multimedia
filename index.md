@@ -11,3 +11,5 @@
 ### [Cours 10 : Typographies et animations](./c10.md)
 
 ### [TP3 : Montage vidéo simple](./tp3.md)
+
+### [Travail synthèse](./synthese.md)
