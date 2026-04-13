@@ -16,7 +16,7 @@ Le projet doit comprendre les demandes suivantes :
 La préproduction comprend un texte au format Word avec les éléments suivants  :
 
 - Une description de votre plus grande ambition?
-- Une description du ton (humoristique, dramatique, profesionnel, techno, etc.)   
+- Une description du ton (humoristique, dramatique, professionnel, techno, etc.)   
 - Une description visuelle (quelles type d'images seront montrées?)
 - Une description sonore (quelles type de musique sera utilisée?)
 
